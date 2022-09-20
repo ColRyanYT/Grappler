@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Imports/Imported models/glapple.glb" type="PackedScene" id=1]
+[ext_resource path="res://weapons/Grapple.gd" type="Script" id=2]
+
+[sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0, 0, 0, 1 )
+
+[node name="Grapple" type="Spatial"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+script = ExtResource( 2 )
+
+[node name="glapple" parent="." instance=ExtResource( 1 )]
+transform = Transform( -0.1, 0, -8.74228e-09, 0, 0.1, 0, 8.74228e-09, 0, -0.1, 0, 0, 0 )
+
+[node name="Line" type="MeshInstance" parent="glapple"]
+transform = Transform( 0.609375, 0, 0, 0, 0.571509, 0, 0, 0, 99.399, 9.09495e-13, 1.90308, 105.701 )
+visible = false
+mesh = SubResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 2 )
+
+[node name="RayCast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.192823, 0 )
+enabled = true
+cast_to = Vector3( 0, -1, 200 )
+collision_mask = 2
+
+[node name="GrappleTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="Lookpoint" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.22853e-07, 0.182839, -8.26847 )
+
+[connection signal="timeout" from="GrappleTimer" to="." method="_on_GrappleTimer_timeout"]
+
+[editable path="glapple"]
